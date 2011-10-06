@@ -12,7 +12,17 @@
 	<artifactId>assembla-jenkins</artifactId>
   	<version>1.0-SNAPSHOT</version>
   	<packaging>hpi</packaging>
-  	<name>Jenkins Assembla plugin</name>
+  	<name>Assembla plugin</name>
+	
+       <url>http://wiki.jenkins-ci.org/display/JENKINS/assembla+plugin</url>
+  
+          <developers>
+            <developer>
+                  <id>droidev82</id>
+                  <name>Simone Ardissone</name>
+                  <email>simon@lmitsoftware.com</email>
+             </developer>
+          </developers>
 
 	<dependencies>
 		<dependency>

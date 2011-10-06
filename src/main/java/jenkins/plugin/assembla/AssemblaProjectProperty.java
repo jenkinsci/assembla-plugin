@@ -1,6 +1,7 @@
 package jenkins.plugin.assembla;
 
 import hudson.Extension;
+import hudson.Util;
 import hudson.model.JobProperty;
 import hudson.model.JobPropertyDescriptor;
 import hudson.model.AbstractProject;
@@ -9,6 +10,8 @@ import hudson.util.CopyOnWriteList;
 import hudson.util.FormValidation;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -34,7 +37,7 @@ public class AssemblaProjectProperty extends JobProperty<AbstractProject<?, ?>> 
 	private boolean backtrackEnabled;
 
 	private String siteName;
-	
+
 	private boolean pluginEnabled;
 
 	@DataBoundConstructor
@@ -52,11 +55,11 @@ public class AssemblaProjectProperty extends JobProperty<AbstractProject<?, ?>> 
 		this.backtrackEnabled = backtrackEnabled;
 		this.pluginEnabled = pluginEnabled;
 	}
-	
+
 	public boolean isPluginEnabled() {
 		return pluginEnabled;
 	}
-	
+
 	public String getSpaceName() {
 		return spaceName;
 	}
@@ -131,6 +134,26 @@ public class AssemblaProjectProperty extends JobProperty<AbstractProject<?, ?>> 
 			return true;
 		}
 
+		public FormValidation doUrlCheck(@QueryParameter final String value)
+				throws IOException, ServletException {
+
+			return new FormValidation.URLCheck() {
+				@Override
+				protected FormValidation check() throws IOException,
+						ServletException {
+					String url = Util.fixEmpty(value);
+					if (url == null) {
+						return FormValidation.error(Messages
+								.AssemblaProjectProperty_AssemblaUrlMandatory());
+					} else {
+
+						return FormValidation.ok();
+					}
+
+				}
+			}.check();
+		}
+
 		public FormValidation doTestConnection(
 				@QueryParameter("assembla.url") final String url,
 				@QueryParameter("assembla.username") final String username,
@@ -138,14 +161,17 @@ public class AssemblaProjectProperty extends JobProperty<AbstractProject<?, ?>> 
 				throws IOException, ServletException {
 			try {
 
-				AssemblaSite site = new AssemblaSite(username, password, url, null);
+				AssemblaSite site = new AssemblaSite(username, password, url,
+						null);
 				AssemblaHttpClient client = new AssemblaHttpClient(site);
 
 				int serverError = client.executeHttpGet("my_spaces", null);
 				if (serverError == 200) {
-					
+
 					return FormValidation
-							.okWithMarkup("<img src='"+Hudson.getInstance().getRootUrl()+"/plugin/assembla-jenkins/button-check.png'/><font color='#008000'><b>Success</b></font>");
+							.okWithMarkup("<img src='"
+									+ Hudson.getInstance().getRootUrl()
+									+ "/plugin/assembla-jenkins/button-check.png'/><font color='#008000'><b>Success</b></font>");
 				} else {
 
 					return FormValidation.error("Cannot connect to '" + url
