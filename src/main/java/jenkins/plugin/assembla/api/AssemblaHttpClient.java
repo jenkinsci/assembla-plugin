@@ -19,6 +19,12 @@ public class AssemblaHttpClient {
 	public AssemblaHttpClient(String url, String username, String password) {
 
 		this.url = url;
+
+		if (!url.startsWith("http")) {
+
+			this.url = "http://" + url;
+		}
+
 		this.base64AuthString = new String(
 				Base64.encode((username + ":" + password).getBytes()));
 		this.httpClient = new HttpClient();
@@ -74,7 +80,6 @@ public class AssemblaHttpClient {
 		return putQuery;
 	}
 
-	
 	public int executeHttpGet(String space, String resource) throws IOException {
 
 		GetMethod getQuery = getHttpGet(space, resource);
@@ -82,11 +87,13 @@ public class AssemblaHttpClient {
 		responseStream = getQuery.getResponseBodyAsStream();
 		return responseCode;
 	}
-	
-	public int executeHttpPut(String space, String resource, String data) throws IOException {
+
+	public int executeHttpPut(String space, String resource, String data)
+			throws IOException {
 
 		PutMethod putQuery = getHttpPut(space, resource);
-		putQuery.setRequestEntity(new StringRequestEntity(data, "text/xml", "UTF-8"));
+		putQuery.setRequestEntity(new StringRequestEntity(data, "text/xml",
+				"UTF-8"));
 		int responseCode = httpClient.executeMethod(putQuery);
 		responseStream = putQuery.getResponseBodyAsStream();
 		return responseCode;

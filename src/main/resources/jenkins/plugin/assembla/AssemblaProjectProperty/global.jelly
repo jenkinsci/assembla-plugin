@@ -6,7 +6,8 @@
       <f:repeatable name="assemblasite" var="site" items="${descriptor.sites}">
       		<table width="100%">
 			  <f:entry title="Assembla URL" field="url">
-			    <f:textbox name="assembla.url" value="${site.url}" />
+			    <f:textbox name="assembla.url" value="${site.url}"
+			    checkUrl="'${rootURL}/jobProperty/AssemblaProjectProperty/urlCheck?value='+escape(this.value)" />
 			  </f:entry>
 			  <f:entry title="Assembla Username" field="username">
 			    <f:textbox name="assembla.username" value="${site.username}"/>
