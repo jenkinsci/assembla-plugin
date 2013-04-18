@@ -5,19 +5,19 @@
 		<artifactId>plugin</artifactId>
 		<version>1.427</version>
 	</parent>
-
 	<artifactId>assembla</artifactId>
   	<version>1.3-SNAPSHOT</version>
   	<packaging>hpi</packaging>
   	<name>Assembla plugin</name>
+    <description>Integrates Jenkins with Assembla tickets during SCM update / Build.</description>
 	
        <url>http://wiki.jenkins-ci.org/display/JENKINS/assembla+plugin</url>
   
           <developers>
             <developer>
-                  <id>droidev82</id>
-                  <name>Simone Ardissone</name>
-                  <email>simon@lmitsoftware.com</email>
+                  <id>lucamilanesio</id>
+                  <name>Luca Milanesio</name>
+                  <email>luca@milanesio.org</email>
              </developer>
           </developers>
 
