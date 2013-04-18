@@ -1,8 +1,10 @@
 package jenkins.plugin.assembla;
 
+import hudson.Functions;
 import hudson.Plugin;
 
 public class AssemblaPlugin extends Plugin {
+    public static final String NAME = "assembla";
 
 	private transient AssemblaSCMListener scmListener;
 	
@@ -22,4 +24,13 @@ public class AssemblaPlugin extends Plugin {
 		
 		super.stop();
 	}
+
+    public static String getResourcePath(String resourceFileName) {
+        if (resourceFileName.startsWith("/")) {
+            resourceFileName = resourceFileName.substring(1);
+        }
+        String assemblaLogoUrl = String.format("%s/plugin/" + NAME + "/%s",
+                Functions.getResourcePath(), resourceFileName);
+        return assemblaLogoUrl;
+    }
 }

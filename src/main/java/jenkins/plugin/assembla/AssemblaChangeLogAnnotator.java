@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jenkins.model.Jenkins;
 import jenkins.plugin.assembla.api.AssemblaSite;
 import jenkins.plugin.assembla.api.AssemblaTicketsAPI;
 import jenkins.plugin.assembla.api.AssemblaTicketsAPI.AssemblaTicket;
@@ -57,16 +58,15 @@ public class AssemblaChangeLogAnnotator extends ChangeLogAnnotator {
 					continue;
 				}
 
-				text.addMarkup(
+				String assemblaLogoUrl = AssemblaPlugin.getResourcePath("assembla_icon.png");
+        text.addMarkup(
 						m.start(1),
 						m.end(1),
 						String.format(
 								"<a href='%s' tooltip='%s' target='_blank'>%s",
 								ticket.getUrl(),
 								Util.escape(ticket.getDescription()),
-								"<img src='"
-										+ Hudson.getInstance().getRootUrl()
-										+ "/plugin/assembla-jenkins/assembla_icon.png'/>"),
+								"<img src='" + assemblaLogoUrl + "'/>"),
 						"</a>");
 
 			} else {
