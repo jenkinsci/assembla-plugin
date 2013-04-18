@@ -29,8 +29,7 @@ public class AssemblaSCMListener extends SCMListener {
 
 		site = AssemblaSite.get(build.getProject());
 
-		if(!site.isPluginEnabled()){
-			
+		if(site == null || !site.isPluginEnabled()){
 			return;
 		}
 		
