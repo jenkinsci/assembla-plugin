@@ -6,7 +6,7 @@
 		<version>1.427</version>
 	</parent>
 	<artifactId>assembla</artifactId>
-  	<version>1.3-SNAPSHOT</version>
+  	<version>1.3</version>
   	<packaging>hpi</packaging>
   	<name>Assembla plugin</name>
     <description>Integrates Jenkins with Assembla tickets during SCM update / Build.</description>
