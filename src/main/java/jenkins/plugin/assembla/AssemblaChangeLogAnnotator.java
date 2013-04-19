@@ -66,7 +66,7 @@ public class AssemblaChangeLogAnnotator extends ChangeLogAnnotator {
 								"<a href='%s' tooltip='%s' target='_blank'>%s",
 								ticket.getUrl(),
 								Util.escape(ticket.getDescription()),
-								"<img src='" + assemblaLogoUrl + "'/>"),
+								"<img src='" + assemblaLogoUrl + "' style='padding-right: 3px' />"),
 						"</a>");
 
 			} else {
