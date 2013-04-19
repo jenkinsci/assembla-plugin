@@ -21,58 +21,55 @@ import jenkins.plugin.assembla.api.AssemblaTicketsAPI.AssemblaTicket;
 @Extension
 public class AssemblaChangeLogAnnotator extends ChangeLogAnnotator {
 
-	private static final Logger LOGGER = Logger
-			.getLogger(AssemblaChangeLogAnnotator.class.getName());
+    private static final Logger LOGGER = Logger
+            .getLogger(AssemblaChangeLogAnnotator.class.getName());
 
-	@Override
-	public void annotate(AbstractBuild<?, ?> build, Entry change,
-			MarkupText text) {
-		
-		AssemblaSite site = AssemblaSite.get(build.getProject());
-		
-		if(!site.isPluginEnabled()){
-			
-			return;
-		}
-		
-		LOGGER.info("Annotating change");
+    @Override
+    public void annotate(AbstractBuild<?, ?> build, Entry change,
+            MarkupText text) {
 
-		String commitMessage = change.getMsg();
+        AssemblaSite site = AssemblaSite.get(build.getProject());
 
-		Pattern pattern = Pattern.compile(site.getPatternInternal());
-		Matcher m = pattern.matcher(commitMessage);
+        if (!site.isPluginEnabled()) {
 
-		AssemblaTicketsAPI ticketApi = new AssemblaTicketsAPI(site);
+            return;
+        }
 
-		while (m.find()) {
-			if (m.groupCount() >= 1) {
+        LOGGER.info("Annotating change");
 
-				String ticketNumber = m.group(1).substring(1);
-				LOGGER.info("Annotating ASSEMBLA ticket: '" + ticketNumber
-						+ "'");
+        String commitMessage = change.getMsg();
+        Pattern pattern = Pattern.compile(site.getPatternInternal());
+        Matcher m = pattern.matcher(commitMessage);
 
-				AssemblaTicket ticket = ticketApi.getTicket(site.getSpace(),
-						ticketNumber);
+        AssemblaTicketsAPI ticketApi = new AssemblaTicketsAPI(site);
 
-				if (ticket == null) {
-					continue;
-				}
+        while (m.find()) {
+                String ticketGroupString = m.group();
+                try {
+                    int ticketNumber = AssemblaPlugin.getTicketNumber(ticketGroupString);
+                    LOGGER.info("Annotating ASSEMBLA ticket: '" + ticketNumber
+                            + "'");
 
-				String assemblaLogoUrl = AssemblaPlugin.getResourcePath("assembla_icon.png");
-        text.addMarkup(
-						m.start(1),
-						m.end(1),
-						String.format(
-								"<a href='%s' tooltip='%s' target='_blank'>%s",
-								ticket.getUrl(),
-								Util.escape(ticket.getDescription()),
-								"<img src='" + assemblaLogoUrl + "' style='padding-right: 3px' />"),
-						"</a>");
+                    AssemblaTicket ticket = ticketApi.getTicket(
+                            site.getSpace(), ticketNumber);
 
-			} else {
-				LOGGER.log(Level.WARNING, "The ASSEMBLA pattern " + pattern
-						+ " doesn't define a capturing group!");
-			}
-		}
-	}
+                    if (ticket == null) {
+                        continue;
+                    }
+
+                    String assemblaLogoUrl = AssemblaPlugin
+                            .getResourcePath("assembla_icon.png");
+                    text.addMarkup(m.start(), m.end(), String.format(
+                            "<a href='%s' tooltip='%s' target='_blank'>%s",
+                            ticket.getUrl(),
+                            Util.escape(ticket.getDescription()), "<img src='"
+                                    + assemblaLogoUrl
+                                    + "' style='margin: -2px 3px 0px 0px' />"),
+                            "</a>");
+                } catch (NumberFormatException e) {
+                    LOGGER.warning("Skipping '" + ticketGroupString + "': "
+                            + e.getLocalizedMessage());
+                }
+        }
+    }
 }

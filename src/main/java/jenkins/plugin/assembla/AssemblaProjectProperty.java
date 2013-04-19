@@ -169,7 +169,7 @@ public class AssemblaProjectProperty extends JobProperty<AbstractProject<?, ?>> 
 				if (serverError == 200) {
 
 					return FormValidation
-							.okWithMarkup("<img src='" + AssemblaPlugin.getResourcePath("button-check.png") + "'/><font color='#008000'><b>Success</b></font>");
+							.okWithMarkup("<img style='margin: -2px 4px 0px 0px;' src='" + AssemblaPlugin.getResourcePath("button-check.png") + "'/><font color='#008000'><b>Success</b></font>");
 				} else {
 
 					return FormValidation.error("Cannot connect to '" + url

@@ -6,7 +6,7 @@
       <f:repeatable name="assemblasite" var="site" items="${descriptor.sites}">
       		<table width="100%">
 			  <f:entry title="Assembla URL" field="url">
-			    <f:textbox name="assembla.url" value="${site.url}"
+			    <f:textbox name="assembla.url" value="${site.url}" default="https://assembla.com"
 			    checkUrl="'${rootURL}/jobProperty/AssemblaProjectProperty/urlCheck?value='+escape(this.value)" />
 			  </f:entry>
 			  <f:entry title="Assembla Username" field="username">
@@ -15,8 +15,8 @@
 			  <f:entry title="Assembla Password" field="password">
 			   	<f:password name="assembla.password" value="${site.password}"/>
 			  </f:entry>
-			  <f:entry title="Ticket Pattern" field="pattern">
-			   	<f:textbox name="assembla.pattern" value="${site.pattern}"/>
+			  <f:entry title="Ticket Regex" field="pattern">
+			   	<f:textbox name="assembla.pattern" value="${site.pattern}"  default="\[#[0-9]+\]"/>
 			  </f:entry>
 			  <f:entry title="">
 			  	<div align="right">

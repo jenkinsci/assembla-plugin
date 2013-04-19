@@ -73,7 +73,7 @@ public class AssemblaTicketsAPI extends AbstractAssemblaAPI {
 
 	}
 
-	public AssemblaTicket getTicket(String space, String ticketNumber) {
+	public AssemblaTicket getTicket(String space, int ticketNumber) {
 
 		this.space = space;
 
@@ -141,7 +141,7 @@ public class AssemblaTicketsAPI extends AbstractAssemblaAPI {
 		return result;
 	}
 
-	public boolean doCommentTicket(String space, String ticketNumber,
+	public boolean doCommentTicket(String space, int ticketNumber,
 			String comment) {
 
 		boolean result = false;

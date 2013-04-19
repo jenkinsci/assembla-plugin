@@ -63,9 +63,7 @@ public class AssemblaSCMListener extends SCMListener {
 		AssemblaTicketsAPI ticketApi = new AssemblaTicketsAPI(site);
 
 		while (m.find()) {
-			if (m.groupCount() >= 1) {
-
-				String ticketNumber = m.group(1).substring(1);
+				int ticketNumber = AssemblaPlugin.getTicketNumber(m.group());
 				LOGGER.info("ASSEMBLA ticket pattern matches");
 				LOGGER.info("Getting ASSEMBLA ticket: '" + ticketNumber + "'");
 
@@ -79,13 +77,8 @@ public class AssemblaSCMListener extends SCMListener {
 				LOGGER.info("Posting comment to ASSEMBLA ticket: '"
 						+ ticketNumber + "'");
 				ticketApi.doCommentTicket(site.getSpace(), ticketNumber,
-						"[[url:" + Hudson.getInstance().getRootUrl() + "/"
-								+ build.getUrl() + "]] " + m.group(2));
-
-			} else {
-				LOGGER.log(Level.WARNING, "The ASSEMBLA pattern " + pattern
-						+ " doesn't define a capturing group!");
-			}
+						"Built on Jenkins [[url:" + Hudson.getInstance().getRootUrl() + "/"
+								+ build.getUrl() + "]] ");
 		}
 	}
 
