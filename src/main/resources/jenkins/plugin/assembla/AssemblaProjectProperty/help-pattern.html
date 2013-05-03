@@ -1,5 +1,6 @@
 <div>
 You can define your own pattern to search for Assembla ticket ids in the SCM logs.
 If empty the default one is used : (#[0-9]+)( .*)
-Note that the pattern must contain one matching group (on index 1) which should match the actual Assembla ticket id.
+Regex does not necessarily have to be split into matching groups, the Assembla Ticket ID will 
+be automatically detected in any part of the matched string.
 </div>
