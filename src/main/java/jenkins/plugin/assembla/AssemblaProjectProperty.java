@@ -143,8 +143,7 @@ public class AssemblaProjectProperty extends JobProperty<AbstractProject<?, ?>> 
 						ServletException {
 					String url = Util.fixEmpty(value);
 					if (url == null) {
-						return FormValidation.error(Messages
-								.AssemblaProjectProperty_AssemblaUrlMandatory());
+						return FormValidation.error("Assembla site URL is a mandatory field");
 					} else {
 
 						return FormValidation.ok();
