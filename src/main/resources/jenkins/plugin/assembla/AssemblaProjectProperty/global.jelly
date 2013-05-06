@@ -16,7 +16,7 @@
 			   	<f:password name="assembla.password" value="${site.password}"/>
 			  </f:entry>
 			  <f:entry title="Ticket Regex" field="pattern">
-			   	<f:textbox name="assembla.pattern" value="${site.pattern}"  default="\[#[0-9]+\]"/>
+			   	<f:textbox name="assembla.pattern" value="${site.pattern}"  default="#[0-9]+"/>
 			  </f:entry>
 			  <f:entry title="">
 			  	<div align="right">
