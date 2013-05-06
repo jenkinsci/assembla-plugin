@@ -3,6 +3,8 @@ package jenkins.plugin.assembla;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.kohsuke.stapler.Stapler;
+
 import hudson.Functions;
 import hudson.Plugin;
 
@@ -42,8 +44,10 @@ public class AssemblaPlugin extends Plugin {
         if (resourceFileName.startsWith("/")) {
             resourceFileName = resourceFileName.substring(1);
         }
-        String assemblaLogoUrl = String.format("%s/plugin/" + NAME + "/%s",
-                Functions.getResourcePath(), resourceFileName);
+        String assemblaLogoUrl =
+            String.format("%s%s/plugin/" + NAME + "/%s", Stapler
+                .getCurrentRequest().getContextPath(), Functions.getResourcePath(),
+                resourceFileName);
         return assemblaLogoUrl;
     }
 }
