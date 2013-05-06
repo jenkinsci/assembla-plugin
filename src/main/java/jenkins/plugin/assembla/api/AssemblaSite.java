@@ -12,7 +12,7 @@ public class AssemblaSite {
 	private String url;
 	private String pattern;
 
-	private final static String DEFAULT_PATTERN = "(#[0-9]+)( .*)"; // default
+	private final static String DEFAULT_PATTERN = "#[0-9]+"; // default
 
 	private transient String space;
 
