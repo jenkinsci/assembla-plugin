@@ -56,7 +56,7 @@ public class AssemblaHttpClient {
 
 		GetMethod getQuery = new GetMethod(query);
 		getQuery.addRequestHeader("Accept", "application/xml");
-		getQuery.addRequestHeader("Authorization", "Base " + base64AuthString);
+		getQuery.addRequestHeader("Authorization", "Basic " + base64AuthString);
 		return getQuery;
 	}
 
@@ -76,7 +76,7 @@ public class AssemblaHttpClient {
 
 		PutMethod putQuery = new PutMethod(query);
 		putQuery.addRequestHeader("Accept", "application/xml");
-		putQuery.addRequestHeader("Authorization", "Base " + base64AuthString);
+		putQuery.addRequestHeader("Authorization", "Basic " + base64AuthString);
 		return putQuery;
 	}
 
